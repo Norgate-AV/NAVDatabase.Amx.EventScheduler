@@ -1,7 +1,7 @@
 {
-    "name": "NAVDatabase.Amx.EventScheduler",
+    "name": "navdatabase.amx.eventscheduler",
+    "displayName": "NAVDatabase.Amx.EventScheduler",
     "version": "1.0.0",
-    "private": true,
     "keywords": [
         "amx",
         "netlinx",
@@ -17,31 +17,32 @@
         "url": "https://github.com/Norgate-AV/NAVDatabase.Amx.EventScheduler/issues"
     },
     "engines": {
-        "node": ">=14"
+        "node": ">=20"
     },
     "scripts": {
         "build": "pwsh ./build.ps1",
         "commit": "git-cz",
-        "prepare": "husky install",
+        "prepare": "husky",
         "pretty:fix": "prettier --write .",
         "doctoc": "doctoc README.md",
         "contrib:add": "all-contributors add",
         "contrib:generate": "all-contributors generate",
-        "contrib:check": "all-contributors check",
-        "size": "size-limit",
-        "analyze": "size-limit --why"
+        "contrib:check": "all-contributors check"
     },
     "devDependencies": {
-        "@commitlint/cli": "^17.4.4",
-        "@commitlint/config-conventional": "^17.4.4",
-        "@norgate-av/genlinx": "^1.0.0",
+        "@commitlint/cli": "^19.0.3",
+        "@commitlint/config-conventional": "^19.0.3",
+        "@norgate-av/genlinx": "^2.2.1",
+        "@semantic-release/changelog": "^6.0.3",
+        "@semantic-release/exec": "^6.0.3",
+        "@semantic-release/git": "^10.0.1",
         "all-contributors-cli": "^6.24.0",
         "commitizen": "^4.3.0",
         "cz-conventional-changelog": "3.3.0",
         "doctoc": "^2.2.1",
-        "husky": "^8.0.3",
-        "lint-staged": "^14.0.1",
-        "prettier": "^3.0.3",
-        "size-limit": "^9.0.0"
+        "husky": "^9.0.11",
+        "lint-staged": "^15.4.0",
+        "prettier": "^3.2.5",
+        "semantic-release": "^24.2.1"
     }
 }
