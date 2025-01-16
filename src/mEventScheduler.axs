@@ -49,6 +49,8 @@ DEFINE_CONSTANT
 
 constant long TL_EVENT_LOOP = 1
 
+constant integer MAX_EVENTS = 20
+
 constant char DEFAULT_SHUT_DOWN_TIME[] = '22:00'
 
 
@@ -69,7 +71,7 @@ DEFINE_VARIABLE
 
 volatile long eventLoop[] = { 500 }
 
-volatile _Event events[20]
+volatile _Event events[MAX_EVENTS]
 volatile integer eventCount = 0
 
 
@@ -102,6 +104,10 @@ define_function HandleEvents(ttimeline timeline) {
     NAVDateTimeGetTimespecNow(timespec)
 
     for (x = 1; x <= eventCount; x++) {
+        if (!length_array(events[x].Name)) {
+            continue
+        }
+
         if (!NAVDateTimeTimespecTimeIsMatch(timespec, events[x].Timespec)) {
             continue
         }
@@ -162,10 +168,92 @@ define_function AddEvent(char name[], char time[]) {
 }
 
 
+define_function integer FindEvent(char name[]) {
+    stack_var integer x
+
+    for (x = 1; x <= eventCount; x++) {
+        if (events[x].Name != name) {
+            continue
+        }
+
+        return x
+    }
+
+    return 0
+}
+
+
+define_function ShuffleEvents(integer start) {
+    stack_var integer x
+
+    for (x = start; x < eventCount; x++) {
+        events[x].Name = events[x + 1].Name
+        events[x].Timespec = events[x + 1].Timespec
+    }
+}
+
+
+define_function ClearEvent(_Event event) {
+    event.Name = ''
+    event.Timespec.Hour = 0
+    event.Timespec.Minute = 0
+    event.Timespec.Seconds = 0
+}
+
+
+define_function DeleteEvent(char name[]) {
+    stack_var integer event
+
+    event = FindEvent(name)
+
+    if (event <= 0) {
+        return
+    }
+
+    if (event < eventCount) {
+        ShuffleEvents(event)
+    }
+    else {
+        ClearEvent(events[event])
+    }
+
+    eventCount--
+}
+
+
+define_function UpdateEvent(char name[], char time[]) {
+    stack_var integer event
+    stack_var sinteger result
+
+    event = FindEvent(name)
+
+    if (event <= 0) {
+        return
+    }
+
+    result = NAVDateTimeGetTimespecFromTime(time, events[event].Timespec)
+
+    if (result < 0) {
+        NAVErrorLog(NAV_LOG_LEVEL_ERROR, 'UpdateEvent: Invalid time')
+        return
+    }
+}
+
+
+define_function InitializeEvents() {
+    stack_var integer x
+
+    for (x = 1; x <= MAX_EVENTS; x++) {
+        ClearEvent(events[x])
+    }
+}
+
+
 (***********************************************************)
 (*                STARTUP CODE GOES BELOW                  *)
 (***********************************************************)
 DEFINE_START {
+    InitializeEvents()
     NAVTimelineStart(TL_EVENT_LOOP, eventLoop, TIMELINE_ABSOLUTE, TIMELINE_REPEAT)
 }
 
@@ -187,6 +275,12 @@ data_event[vdvObject] {
         switch (message.Header) {
             case 'ADD_EVENT': {
                 AddEvent(message.Parameter[1], message.Parameter[2])
+            }
+            case 'DELETE_EVENT': {
+                DeleteEvent(message.Parameter[1])
+            }
+            case 'UPDATE_EVENT': {
+                UpdateEvent(message.Parameter[1], message.Parameter[2])
             }
         }
     }
