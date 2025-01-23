@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.1](https://github.com/Norgate-AV/NAVDatabase.Amx.EventScheduler/compare/v1.0.0...v1.0.1) (2025-01-16)
+
+### 🐛 Bug Fixes
+
+- fix path update in install script ([c97359e](https://github.com/Norgate-AV/NAVDatabase.Amx.EventScheduler/commit/c97359e501e53530292d19209e64fbe2c1bcbe7f))
+
 ## 1.0.0 (2025-01-16)
 
 ### 🌟 Features
