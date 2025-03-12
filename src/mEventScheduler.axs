@@ -5,6 +5,9 @@ MODULE_NAME='mEventScheduler'   (
 (***********************************************************)
 #include 'NAVFoundation.ModuleBase.axi'
 #include 'NAVFoundation.DateTimeUtils.axi'
+#include 'NAVFoundation.TimelineUtils.axi'
+#include 'NAVFoundation.ErrorLogUtils.axi'
+#include 'NAVFoundation.StringUtils.axi'
 
 /*
  _   _                       _          ___     __
