@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.0](https://github.com/Norgate-AV/NAVDatabase.Amx.EventScheduler/compare/v1.1.0...v1.2.0) (2025-03-12)
+
+### 🌟 Features
+
+- update to support NAVFoundation.Amx v2.0.0 ([9ed0d5d](https://github.com/Norgate-AV/NAVDatabase.Amx.EventScheduler/commit/9ed0d5d077ecaaa344d9e428df2abefc11eae9ea))
+
 ## [1.1.0](https://github.com/Norgate-AV/NAVDatabase.Amx.EventScheduler/compare/v1.0.1...v1.1.0) (2025-02-17)
 
 ### 🌟 Features
