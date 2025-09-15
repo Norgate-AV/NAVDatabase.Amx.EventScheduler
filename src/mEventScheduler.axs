@@ -3,11 +3,9 @@ MODULE_NAME='mEventScheduler'   (
                                 )
 
 (***********************************************************)
-#include 'NAVFoundation.ModuleBase.axi'
+#include 'NAVFoundation.SnapiHelpers.axi'
 #include 'NAVFoundation.DateTimeUtils.axi'
 #include 'NAVFoundation.TimelineUtils.axi'
-#include 'NAVFoundation.ErrorLogUtils.axi'
-#include 'NAVFoundation.StringUtils.axi'
 
 /*
  _   _                       _          ___     __
@@ -52,7 +50,9 @@ DEFINE_CONSTANT
 
 constant long TL_EVENT_LOOP = 1
 
-constant integer MAX_EVENTS = 20
+constant long TL_EVENT_LOOP_INTERVAL[] = { 500 }
+
+constant integer MAX_EVENTS = 10
 
 constant char DEFAULT_SHUT_DOWN_TIME[] = '22:00'
 
@@ -71,8 +71,6 @@ struct _Event {
 (*               VARIABLE DEFINITIONS GO BELOW             *)
 (***********************************************************)
 DEFINE_VARIABLE
-
-volatile long eventLoop[] = { 500 }
 
 volatile _Event events[MAX_EVENTS]
 volatile integer eventCount = 0
@@ -257,7 +255,10 @@ define_function InitializeEvents() {
 (***********************************************************)
 DEFINE_START {
     InitializeEvents()
-    NAVTimelineStart(TL_EVENT_LOOP, eventLoop, TIMELINE_ABSOLUTE, TIMELINE_REPEAT)
+    NAVTimelineStart(TL_EVENT_LOOP,
+                        TL_EVENT_LOOP_INTERVAL,
+                        TIMELINE_ABSOLUTE,
+                        TIMELINE_REPEAT)
 }
 
 (***********************************************************)
