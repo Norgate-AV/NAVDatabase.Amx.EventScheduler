@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.1](https://github.com/Norgate-AV/NAVDatabase.Amx.EventScheduler/compare/v1.2.0...v1.2.1) (2025-09-15)
+
+### 🚀 Performance
+
+- remove unnecessary includes ([e8b8992](https://github.com/Norgate-AV/NAVDatabase.Amx.EventScheduler/commit/e8b8992cdee6135e6c0f781a44131d47910b87f1))
+
 ## [1.2.0](https://github.com/Norgate-AV/NAVDatabase.Amx.EventScheduler/compare/v1.1.0...v1.2.0) (2025-03-12)
 
 ### 🌟 Features
